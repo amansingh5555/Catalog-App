@@ -36,6 +36,8 @@ dependencies:
   google_fonts: ^5.1.0
   flutter_tts: ^3.7.0
   speech_to_text: ^6.3.0
+  flutter_flushbar: ^0.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

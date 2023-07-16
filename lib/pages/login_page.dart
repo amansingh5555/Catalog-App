@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             validator: (value) {
                               if (value != null && value.isEmpty) {
-                                _speakWithPitch("Please enter UserName", 1.0);
+                                _speakWithPitch("Please enter UserName", 1);
                                 return "UserName cannot be empty";
                               }
                               return null;
@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(width: 8.0),
                         IconButton(
                           onPressed: () {
-                            _speakWithPitch("Enter UserName", 1.0);
+                            _speakWithPitch("Enter UserName", 1);
                           },
                           icon: Icon(Icons.volume_up),
                           tooltip: "Speak UserName",
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             validator: (value) {
                               if (value != null && value.isEmpty) {
-                                _speakWithPitch("Please enter Password", 1.0);
+                                _speakWithPitch("Please enter username and Password", 1.0);
                                 return "Password cannot be empty";
                               }
                               return null;
