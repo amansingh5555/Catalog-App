@@ -37,6 +37,7 @@ dependencies:
   flutter_tts: ^3.7.0
   speech_to_text: ^6.3.0
   flutter_flushbar: ^0.0.2
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -66,7 +67,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assests/image/login_page.png
+    - assests/image/login_page.jpg
+    - assests/image/image1.jpg
+    - assests/image/image2.jpg
+
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

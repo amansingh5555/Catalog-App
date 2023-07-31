@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               Image.asset(
-                "assests/image/login_page.png",
+                "assests/image/login_page.jpg",
                 fit: BoxFit.cover,
               ),
               SizedBox(height: 20.0),
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _speakWithPitch("Login", 1.0);
-                    Navigator.pushNamed(context, MyRoutes.HomeRoute);
+                    Navigator.pushNamed(context, MyRoutes.UserRoute);
                   }
                 },
                 style: ElevatedButton.styleFrom(),
