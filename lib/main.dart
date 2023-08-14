@@ -1,11 +1,13 @@
+import 'package:firstproject/pages/admin_dashboard.dart';
 import 'package:firstproject/pages/home_page.dart';
+import 'package:firstproject/pages/manage_schemes.dart';
 import 'package:firstproject/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:firstproject/pages/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firstproject/pages/registration_page.dart';
 import 'package:firstproject/pages/user_dashboard.dart';
-import 'package:firstproject/pages/grievance_page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -27,6 +29,9 @@ class MyApp extends StatelessWidget {
         MyRoutes.HomeRoute: (context) => HomePage(),
         MyRoutes.LoginRoute: (context) => LoginPage(),
         MyRoutes.RegistrationRoute: (context) => RegistrationPage(),
+        MyRoutes.AdminRoute: (context) => AdminPage(),
+        MyRoutes.SchemeRoute: (context) => ManageSchemesPage(),
+
      //    MyRoutes.GrievanceRoute:(context) => SubmitGrievancePage(),
       },
     );

@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _speakWithPitch("Login", 1.0);
-                    Navigator.pushNamed(context, MyRoutes.UserRoute);
+                    Navigator.pushNamed(context, MyRoutes.HomeRoute);
                   }
                 },
                 style: ElevatedButton.styleFrom(),

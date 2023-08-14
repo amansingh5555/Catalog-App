@@ -148,8 +148,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ElevatedButton(
               onPressed: _isAgreedToTerms ? _submitForm : null,
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                onPrimary: Colors.white,
+                foregroundColor: Colors.white, backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),

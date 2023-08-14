@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:firstproject/pages/grievance_page.dart';
+import 'package:firstproject/pages/schemes_page.dart';
+import 'package:firstproject/pages/help_page.dart'; // Import the HelpPage
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: UserDashboardPage(),
+  ));
+}
 
 class UserDashboardPage extends StatefulWidget {
-  get theme => null;
-
   @override
   _UserDashboardPageState createState() => _UserDashboardPageState();
 }
@@ -55,15 +62,76 @@ class _UserDashboardPageState extends State<UserDashboardPage> {
     await flutterTts.speak(text);
   }
 
-  //void _navigateToSubmitGrievancePage() {
-    //Navigator.push(
-      //context,
-      //MaterialPageRoute(
-       // builder: (context) => SubmitGrievancePage(theme: widget.theme),
-     // ),
-   // );
- // }
+  void _navigateToPage(String pageTitle) {
+    _speak(pageTitle);
+    if (pageTitle == 'Grievance Page') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GrievancePage(),
+        ),
+      );
+    } else if (pageTitle == 'Schemes Page') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SchemePage(),
+        ),
+      );
+    } else if (pageTitle == 'Need Help') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HelpPage(), // Navigate to HelpPage
+        ),
+      );
+    }
+    // Add more navigation conditions for other pages here
+  }
 
+  Widget _buildOptionCard({
+    required IconData icon,
+    required Color iconColor,
+    required String title,
+    required String pageTitle,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        _speak(title);
+        _navigateToPage(pageTitle);
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        elevation: 4,
+        child: ListTile(
+          contentPadding: EdgeInsets.all(16.0),
+          leading: Icon(
+            icon,
+            color: iconColor,
+            size: 40,
+          ),
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          trailing: GestureDetector(
+            onTap: () {
+              _speak(title);
+            },
+            child: Icon(
+              Icons.volume_up,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +154,13 @@ class _UserDashboardPageState extends State<UserDashboardPage> {
                   fontSize: 24,
                 ),
               ),
+            ),
+            ListTile(
+              title: Text('Need Help'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+                _navigateToPage('Need Help');
+              },
             ),
             // Add more list tiles for additional options
           ],
@@ -112,74 +187,31 @@ class _UserDashboardPageState extends State<UserDashboardPage> {
               },
             ),
           ),
-          SizedBox(height: 16.0),
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    color: Colors.blue[900],
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.error,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Grievance',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: () {
-                    _speak('Applicable Schemes');
-                  },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    color: Colors.blue[900],
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.assignment,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Applicable Schemes',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          SizedBox(height: 24.0),
+          _buildOptionCard(
+            icon: Icons.message_outlined,
+            iconColor: Colors.purple,
+            title: 'Grievance',
+            pageTitle: 'Grievance Page',
           ),
+          SizedBox(height: 16.0),
+          _buildOptionCard(
+            icon: Icons.assignment,
+            iconColor: Colors.green,
+            title: 'Applicable Schemes',
+            pageTitle: 'Schemes Page',
+          ),
+          SizedBox(height: 16.0),
+          _buildOptionCard(
+            icon: Icons.help,
+            iconColor: Colors.brown,
+            title: 'Need Help',
+            pageTitle: 'Need Help',
+          ),
+
+          // Add more option cards here
         ],
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: UserDashboardPage(),
-  ));
 }
