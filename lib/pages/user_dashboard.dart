@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:firstproject/pages/grievance_page.dart';
 import 'package:firstproject/pages/schemes_page.dart';
-import 'package:firstproject/pages/help_page.dart'; // Import the HelpPage
+import 'package:firstproject/pages/applied_schemes_page.dart';
+import 'package:firstproject/pages/help_page.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -78,11 +79,18 @@ class _UserDashboardPageState extends State<UserDashboardPage> {
           builder: (context) => SchemePage(),
         ),
       );
+    } else if (pageTitle == 'Applied Schemes') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AppliedSchemesPage(),
+        ),
+      );
     } else if (pageTitle == 'Need Help') {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HelpPage(), // Navigate to HelpPage
+          builder: (context) => HelpPage(),
         ),
       );
     }
@@ -140,30 +148,97 @@ class _UserDashboardPageState extends State<UserDashboardPage> {
         title: Text('User Dashboard'),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'User Dashboard',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+        child: Container(
+          color: Colors.indigo, // Change the drawer background color
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.indigo,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage('assets/user_avatar.jpg'),
+                      radius: 30,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'John Doe',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold, // Make the name bold
+                      ),
+                    ),
+                    Text(
+                      'john.doe@example.com',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            ListTile(
-              title: Text('Need Help'),
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
-                _navigateToPage('Need Help');
-              },
-            ),
-            // Add more list tiles for additional options
-          ],
+              ListTile(
+                title: Text(
+                  'Schemes',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold, // Make the title bold
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  _navigateToPage('Schemes Page');
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Applied Schemes',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold, // Make the title bold
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  _navigateToPage('Applied Schemes');
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Grievance',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold, // Make the title bold
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  _navigateToPage('Grievance Page');
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Need Help',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold, // Make the title bold
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  _navigateToPage('Need Help');
+                },
+              ),
+              // Add more list tiles for additional options
+            ],
+          ),
         ),
       ),
       body: Column(
@@ -187,6 +262,20 @@ class _UserDashboardPageState extends State<UserDashboardPage> {
               },
             ),
           ),
+          SizedBox(height: 16.0),
+          _buildOptionCard(
+            icon: Icons.assignment,
+            iconColor: Colors.green,
+            title: 'Schemes',
+            pageTitle: 'Schemes Page',
+          ),
+          SizedBox(height: 16.0),
+          _buildOptionCard(
+            icon: Icons.event_available_outlined,
+            iconColor: Colors.blueGrey,
+            title: 'Applied Schemes',
+            pageTitle: 'Applied Schemes',
+          ),
           SizedBox(height: 24.0),
           _buildOptionCard(
             icon: Icons.message_outlined,
@@ -196,19 +285,11 @@ class _UserDashboardPageState extends State<UserDashboardPage> {
           ),
           SizedBox(height: 16.0),
           _buildOptionCard(
-            icon: Icons.assignment,
-            iconColor: Colors.green,
-            title: 'Applicable Schemes',
-            pageTitle: 'Schemes Page',
-          ),
-          SizedBox(height: 16.0),
-          _buildOptionCard(
             icon: Icons.help,
             iconColor: Colors.brown,
             title: 'Need Help',
             pageTitle: 'Need Help',
           ),
-
           // Add more option cards here
         ],
       ),
