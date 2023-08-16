@@ -20,8 +20,8 @@ class UserDashboardPage extends StatefulWidget {
 
 class _UserDashboardPageState extends State<UserDashboardPage> {
   final List<String> images = [
-    'assests/image/image1.jpg',
-    'assests/image/image2.jpg',
+    'assets/image/image1.jpg',
+    'assets/image/image2.jpg',
   ];
 
   final PageController _pageController = PageController(initialPage: 0);
@@ -237,6 +237,22 @@ class _UserDashboardPageState extends State<UserDashboardPage> {
                 },
               ),
               // Add more list tiles for additional options
+              ListTile(
+                title: Text(
+                  'Logout',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold, // Make the title bold
+                  ),
+                ),
+                onTap: () {
+                  // TODO: Implement logout functionality
+                },
+                trailing: Icon(
+                  Icons.power_settings_new, // Use the power_settings_new icon
+                  color: Colors.white,      // Set the icon color
+                ),
+              ),
             ],
           ),
         ),

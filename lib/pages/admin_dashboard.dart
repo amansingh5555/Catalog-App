@@ -18,11 +18,35 @@ class MyApp extends StatelessWidget {
 }
 
 class AdminPage extends StatelessWidget {
+  void _logout(BuildContext context) {
+    // You can implement your logout logic here
+    // For example, navigating to the login page or clearing authentication data
+    Navigator.pop(context); // Just an example to navigate back to the previous screen
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Admin Page'),
+        actions: [
+          ElevatedButton.icon(
+            onPressed: () => _logout(context),
+            icon: Icon(Icons.logout, color: Colors.white),
+            label: Text(
+              'Logout',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold, // You can adjust the font weight
+                fontSize: 16, // You can adjust the font size
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.transparent,
+              elevation: 0,
+            ),
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),

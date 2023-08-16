@@ -112,15 +112,15 @@ class _GrievancePageState extends State<GrievancePage> {
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     )
                         : Text(
-                      '        Submit         ',
-                      style: TextStyle(fontSize: 15),
+                      '        Submit        ',
+                      style: TextStyle(fontSize: 18),
                     ),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.indigo,
-                      padding: EdgeInsets.symmetric(vertical: 20),
+                      padding: EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(35),
                       ),
                       elevation: 5,
                     ),

@@ -1,4 +1,3 @@
-import 'package:firstproject/pages/registration_page.dart';
 import 'package:firstproject/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -10,7 +9,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String name = "";
+  String email = "";
   final _formKey = GlobalKey<FormState>();
   FlutterTts flutterTts = FlutterTts();
   stt.SpeechToText speech = stt.SpeechToText();
@@ -84,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 20.0),
               Text(
-                "Welcome $name",
+                "Welcome",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -100,19 +99,19 @@ class _LoginPageState extends State<LoginPage> {
                         Expanded(
                           child: TextFormField(
                             decoration: InputDecoration(
-                              hintText: "Enter UserName",
-                              labelText: "UserName",
+                              hintText: "Enter Email",
+                              labelText: "Email",
                             ),
                             validator: (value) {
                               if (value != null && value.isEmpty) {
-                                _speakWithPitch("Please enter UserName", 1);
-                                return "UserName cannot be empty";
+                                _speakWithPitch("Please enter Email", 1);
+                                return "Email cannot be empty";
                               }
                               return null;
                             },
                             onChanged: (value) {
                               setState(() {
-                                name = value;
+                                email = value;
                               });
                             },
                           ),
@@ -120,10 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(width: 8.0),
                         IconButton(
                           onPressed: () {
-                            _speakWithPitch("Enter UserName", 1);
+                            _speakWithPitch("Enter Email", 1);
                           },
                           icon: Icon(Icons.volume_up),
-                          tooltip: "Speak UserName",
+                          tooltip: "Speak Email",
                         ),
                         IconButton(
                           onPressed: toggleSpeechRecognition,
@@ -144,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             validator: (value) {
                               if (value != null && value.isEmpty) {
-                                _speakWithPitch("Please enter username and Password", 1.0);
+                                _speakWithPitch("Please enter Email and Password", 1.0);
                                 return "Password cannot be empty";
                               }
                               return null;
@@ -210,4 +209,11 @@ class _LoginPageState extends State<LoginPage> {
     await flutterTts.setPitch(pitch);
     await flutterTts.speak(text);
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: LoginPage(),
+  ));
 }

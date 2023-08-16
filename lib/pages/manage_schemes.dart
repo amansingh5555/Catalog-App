@@ -7,6 +7,14 @@ void main() {
   ));
 }
 
+class Scheme {
+  final String schemeId;
+  final String schemeName;
+  final String schemeDescription;
+
+  Scheme(this.schemeId, this.schemeName, this.schemeDescription);
+}
+
 class ManageSchemesPage extends StatefulWidget {
   @override
   _ManageSchemesPageState createState() => _ManageSchemesPageState();
@@ -18,6 +26,8 @@ class _ManageSchemesPageState extends State<ManageSchemesPage> {
   TextEditingController schemeDescriptionController = TextEditingController();
 
   bool isAddingScheme = false;
+
+  List<Scheme> existingSchemes = [];
 
   void toggleAddingScheme() {
     setState(() {
@@ -31,16 +41,37 @@ class _ManageSchemesPageState extends State<ManageSchemesPage> {
   }
 
   void addScheme(String schemeId, String schemeName, String schemeDescription) {
-    // TODO: Implement backend integration to save scheme data
-    // For now, the code just prints the scheme details
-    print('Scheme ID: $schemeId');
-    print('Scheme Name: $schemeName');
-    print('Scheme Description: $schemeDescription');
+    final newScheme = Scheme(schemeId, schemeName, schemeDescription);
+    existingSchemes.add(newScheme);
 
     final snackBar = SnackBar(content: Text('Scheme added successfully'));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
     toggleAddingScheme();
+  }
+
+  bool _validateInput() {
+    if (schemeIdController.text.isEmpty || schemeIdController.text.length != 5) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Invalid Scheme ID'),
+            content: Text('Scheme ID should be 5 alphanumeric characters.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -99,7 +130,7 @@ class _ManageSchemesPageState extends State<ManageSchemesPage> {
                 SizedBox(height: 8.0),
                 TextField(
                   controller: schemeDescriptionController,
-                  maxLines: 5, // Specify the number of lines for the description
+                  maxLines: 5,
                   decoration: InputDecoration(
                     labelText: 'Scheme Description',
                     prefixIcon: Icon(Icons.description, color: Colors.blue),
@@ -132,7 +163,12 @@ class _ManageSchemesPageState extends State<ManageSchemesPage> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: Implement navigation to view/manage existing schemes page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ExistingSchemesPage(existingSchemes),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -152,28 +188,63 @@ class _ManageSchemesPageState extends State<ManageSchemesPage> {
       ),
     );
   }
+}
 
-  bool _validateInput() {
-    if (schemeIdController.text.isEmpty || schemeIdController.text.length != 5) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Invalid Scheme ID'),
-            content: Text('Scheme ID should be 5 alphanumeric characters.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
+class ExistingSchemesPage extends StatelessWidget {
+  final List<Scheme> existingSchemes;
+
+  ExistingSchemesPage(this.existingSchemes);
+
+  void _deleteScheme(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete this scheme?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                existingSchemes.removeAt(index);
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Scheme deleted successfully')),
+                );
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Existing Schemes'),
+      ),
+      body: ListView.builder(
+        itemCount: existingSchemes.length,
+        itemBuilder: (context, index) {
+          final scheme = existingSchemes[index];
+          return ListTile(
+            title: Text(scheme.schemeName),
+            subtitle: Text(scheme.schemeDescription),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () => _deleteScheme(context, index),
+            ),
           );
         },
-      );
-      return false;
-    }
-    return true;
+      ),
+    );
   }
 }
